@@ -1,0 +1,138 @@
+@import '../../styles/variables.scss';
+
+.wrapper{
+    width: 100%;
+    // height: 500px;
+    height: auto;
+    overflow: hidden;
+    overflow-y: auto;
+    background: $command-background;
+}
+
+.wrapper .wrapper-title{
+    width: 100%;
+    height: .3rem;
+    color: $command-font-color;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 0 .1rem;
+}
+
+.wrapper .wrapper-login {
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+.wrapper .wrapper-container{
+    width: 100%;
+    height: auto;
+    background: $command-background;
+}
+
+.command-action {
+  font-size: .16rem;
+  position: relative;
+  padding: 0.05rem .1rem 0.05rem .05rem;
+}
+  // path标题背景样式
+.command-action-path{
+    display: inline-block;
+    position: relative;
+    background: #21c5dc;
+    padding: 0 0.05rem 0 0.15rem;
+    border-top: $command-border-line-width $command-border-line-style  $command-border;
+    border-right: $command-border-line-width $command-border-line-style  $command-border;
+    border-bottom: $command-border-line-width $command-border-line-style  $command-border;
+    border-radius: .01rem;
+    -moz-border-radius: .01rem;
+    -webkit-border-radius: .01rem;
+}
+
+.command-action-path:before {
+  content:"";
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-top: .1rem dashed transparent;
+  border-left: .1rem dashed $command-background;
+  border-bottom: .1rem dashed transparent;
+}
+
+.command-action-msg-gird{
+  // display: grid;
+  // grid-template-columns:25% 25% 25% 25%;
+  // grid-template-rows: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.command-action-true{
+  display: inline-block;
+  width: auto;
+  color: rgb(22, 105, 173);
+  padding: .03rem .15rem;
+}
+
+.command-action-true:hover{
+  color: whitesmoke;
+  background: black;
+  cursor: pointer;
+  border-radius: .01rem ;
+}
+
+.command-action-false{
+    color: rgb(223, 104, 49);
+}
+
+.command-action-date{
+  position: absolute;
+  right: .1rem;
+  top: 120%;
+  // transform: translateY(-50%);
+}
+
+.command-action-input {
+  display: inline-block;
+  word-wrap:break-word; 
+  overflow: hidden;
+  min-width: 2.9rem;
+  min-height: .22rem;
+  max-width: 95%;
+  height: auto;
+  border: none;
+  outline: none;
+  color:$command-font-color;
+  font-size: .16rem;
+  background: $command-background;
+  margin-left: .05rem;
+  caret-color: $command-input-color;
+}
+
+.command-action-contenteditable{
+  color:$command-font-color ;
+  white-space: pre-wrap;
+  display: inline-block;
+  min-width: .1rem;
+  min-height: .15rem;
+  border: none;
+  outline:none;
+  margin-left: .05rem;
+  border-bottom: $command-border-line-width $command-border-line-style  $command-border;
+}
+
+.output-command {
+  margin: .2rem .2rem .2rem 0;
+  white-space: pre-wrap;
+}
+  
+.command-action-editor {
+  line-height: .2rem;
+}
+
+// 输入后 回车loding动画位置
+.anticon-loading{
+  // padding: .1rem;
+}

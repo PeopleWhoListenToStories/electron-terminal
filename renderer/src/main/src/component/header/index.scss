@@ -1,0 +1,31 @@
+.header-nav{
+    height: .5rem;
+    background: orange;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    .header-nav-left{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 100% 100%;
+        >span{
+            width: .25rem;
+            height: .25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin: 0 .01rem;
+        }
+        >span:hover{
+            color: aliceblue;
+        }
+        .close{
+            background: rgb(209, 63, 63);
+        }
+        .hide{
+            background: rgb(240, 137, 52);
+        }
+    }
+}

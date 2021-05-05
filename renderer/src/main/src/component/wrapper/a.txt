@@ -1,0 +1,152 @@
+<!-- /* <template>
+    <div class="weather" :style="styleOptions">
+        <div :
+            {'backgroundImage':'url('+imageSrc+')',width:'.5rem',height:'.5rem',backgroundRepeat:'no-repeat',backgroundSize:('100%
+            100%')}">
+            <!-- <iframe  :src="iframeUrl" sandbox="allow-same-origin allow-scripts allow-forms" width="40" height="40" scrolling="no" frameborder="0" allowtransparency="true" ></iframe> -->
+< !-- < img align="absmiddle" : src="imageSrc" style="border:0;width:46px;height:46px"> -->
+    </div>
+    <div class="weather-tem">
+        {{tem}}<span class="weather-du">°C</span>
+    </div>
+    <div class="date">
+        <div class="today">{{date || new Date().toLocaleDateString().replaceAll('/','-')}}</div>
+        <div class="today-title">
+            <span>{{week}}</span>
+            <span>{{wea}}</span>
+        </div>
+    </div>
+    <div class="time">{{time}}</div>
+    </div>
+    </template>
+
+    <script>
+        import { formatDate } from '../../utils/tool'
+        // xue、lei、shachen、wu、bingbao、yun、yu、yin、qing
+        import { getWeatherApi } from '../../api/weather'
+        import img0 from '../../assets/weather/b0.png' // 晴
+        import img2 from '../../assets/weather/b2.png' // 阴
+        import img5 from '../../assets/weather/b5.png' // 多云转晴
+        import img6 from '../../assets/weather/b6.png' // 雾
+        import img7 from '../../assets/weather/b7.png' // 小雨
+        import img11 from '../../assets/weather/b11.png' // 雷
+        import img12 from '../../assets/weather/b12.png' //
+        import img15 from '../../assets/weather/xue.png' // 雪
+        import img16 from '../../assets/weather/bingbao.png' // 冰雹
+
+        export default {
+            name: 'WeatherCharts',
+            props: {
+                styleOptions: {
+                    type: Object,
+                    default: () => {
+                        return {
+                            width: '3.8rem',
+                            color: '#fff',
+                            display: 'flex',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            fontSize: '.12rem',
+                            fontWeight: 200,
+                            fontFamily: 'serif',
+                            margin: ' 0 .15rem'
+                        }
+                    }
+                }
+            },
+            data() {
+                return {
+                    iframeW: 100 * (window.innerWidth / 1080) / 4,
+                    iframeUrl: 'http://i.tianqi.com/?c=code&id=50&icon=1&num=1&site=12',
+                    city: '', // 城市
+                    date: '', // 日期
+                    wea: '', // 实时天气情况
+                    tem: '', // 实时温度
+                    air_pm25: '', // pm2.5
+                    week: '', // 当前星期
+                    time: '', // 当前时间
+                    dateTimer: null,
+                    apiTimer: null,
+                    imageSrc: ''
+                }
+            },
+            mounted() {
+                this.initData()
+                this.initTime()
+                this.dateTimer = setInterval(() => {
+                    this.initTime()
+                }, 1000)
+                // 每三小时查询一次天气接口
+                this.apiTimer = setInterval(() => {
+                    this.initData()
+                }, 1000 * 60 * 180)
+            },
+            methods: {
+                async initData() {
+                    let defaultWearher = null
+                    const weatherData = JSON.parse(sessionStorage.getItem('weatherJson'))
+                    if (!weatherData) {
+                        const { data } = await getWeatherApi({ version: 'v1', appid: 61734142, appsecret: 'luMQlBP8' })
+                        defaultWearher = data[0]
+                        sessionStorage.setItem('weatherJson', JSON.stringify(data[0]))
+                    } else {
+                        defaultWearher = weatherData
+                    }
+                    this.city = defaultWearher.city || ''
+                    this.date = formatDate(new Date().toLocaleDateString(), 'yyyy-MM-dd')
+                    this.wea = defaultWearher.wea || ''
+                    this.tem = defaultWearher.tem.split('℃')[0] || ''
+                    this.week = defaultWearher.week || ''
+                    this.air_pm25 = defaultWearher.air_pm25 || ''
+                    this.formatImage(defaultWearher.wea_day_img) // xue、lei、shachen、wu、bingbao、yun、yu、yin、qing
+                },
+                initTime() {
+                    this.time = `${this.formatZero(new Date().getHours())}:${this.formatZero(new Date().getMinutes())}:${this.formatZero(new Date().getSeconds())}`
+                },
+                formatImage(value) {
+                    // xue、lei、shachen、wu、bingbao、yun、yu、yin、qing
+                    switch (value) {
+                        case 'qing':
+                            this.imageSrc = img0
+                            break
+                        case 'yin':
+                            this.imageSrc = img2
+                            break
+                        case 'yun':
+                            this.imageSrc = img5
+                            break
+                        case 'wu':
+                            this.imageSrc = img6
+                            break
+                        case 'shachen':
+                            this.imageSrc = img12
+                            break
+                        case 'lei':
+                            this.imageSrc = img11
+                            break
+                        case 'yu':
+                            this.imageSrc = img7
+                            break
+                        case 'xue':
+                            this.imageSrc = img15
+                            break
+                        case 'bingbao':
+                            this.imageSrc = img16
+                            break
+                        default:
+                            this.imageSrc = ''
+                            break
+                    }
+                },
+                formatZero(value) {
+                    return value < 10 ? '0' + value : value
+                },
+                formatDay(value) {
+                    return ['日', '一', '二', '三', '四', '五', '六'][value]
+                }
+            },
+            destroyed() {
+                clearInterval(this.dateTimer)
+                clearInterval(this.apiTimer)
+            }
+        } -- >

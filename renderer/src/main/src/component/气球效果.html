@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        /*以对象的实例  */
+        //创建canvas元素
+        var canvas = document.getElementById("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var content2d = canvas.getContext("2d");
+        var balls = [];  //存储小球对象
+        //创建球球对象
+        function ball() {
+            this.color = null;
+            this.r = null;
+            this.Angle = null;
+            this.x = null;
+            this.y = null;
+            this.AngleX = null;
+            this.AngleY = null;
+            //创建小球的方法
+            this.init = function (x, y) {
+                this.color = this.randomColor();
+                this.x = x;     //坐标
+                this.y = y;
+                this.r = this.randomNum(10, 25);
+                this.Angle = Math.random() * Math.PI * 2;                 //随机产生的角度
+                this.AngleX = this.randomNum(6, 12) * Math.cos(this.Angle);  //x坐标移动的距离
+                this.AngleY = this.randomNum(6, 12) * Math.sin(this.Angle);  //y坐标移动的距离
+            };
+
+            //小球移动
+            this.move = function () {
+                this.x += this.AngleX;
+                this.y += this.AngleY;
+                this.r -= 0.3;
+                this.AngleX *= 0.92;  //控制扩散的距离
+                this.AngleY *= 0.92;
+
+            };
+            //创建小球随机颜色方法
+            this.randomColor = function () {
+                return "#" + parseInt(Math.random() * 16777216).toString(16);
+            };
+            //创建随机数的方法
+            this.randomNum = function (min, max) {
+                return Math.random() * max + min;
+            };
+        }
+
+        //实例化球球
+        function createBall(x, y) {
+            var count = parseInt(Math.random() * 30 + 10);
+            for (var i = 0; i < count; i++) {
+                var b = new ball();
+                b.init(x, y);
+                balls.push(b);
+            }
+        }
+
+        //在canvas上画球球
+        function Draw() {
+            for (var i = 0; i < balls.length; i++) {
+                var b = balls[i];
+                content2d.beginPath();
+                content2d.fillStyle = b.color;
+                content2d.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                content2d.fill();
+                content2d.closePath();
+                b.move();  //画好后要移动
+            }
+        }
+
+        //小球消失
+        function removeBall() {
+            for (var i = 0; i < balls.length; i++) {
+                var b = balls[i];
+                if (b.r < 0.3) {
+                    balls.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        //鼠标事件
+        canvas.onmouseup = function (e) {
+            var x = e.pageX;
+            var y = e.pageY;
+            createBall(x, y);
+        };
+        loop();
+        function loop() {
+            //清除整个画布
+            content2d.clearRect(0, 0, canvas.width, canvas.height);
+            Draw();
+            removeBall();
+            window.requestAnimationFrame(loop);
+            /* 告诉浏览器您要执行的动画并且请求浏览器的在下一个动画帧重绘窗口,方法在浏览器重绘之前作为一个回调函数被调用,
+             就是告诉浏览器在刷新屏幕的时候，调用这个方法*/
+        }
+    </script>
+</body>
+
+</html>

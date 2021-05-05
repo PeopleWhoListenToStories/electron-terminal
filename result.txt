@@ -1,12 +1,8 @@
-# electron-terminal 
-🔧 基于electron实现一个简易的终端
-
-### 项目结构
-```
 electron-react-template
 ├─package.json
 ├─result.txt
-├─renderer    // 渲染进程
+├─renderer
+|    ├─.DS_Store
 |    ├─src
 |    |  ├─main
 |    |  |  ├─.gitignore
@@ -31,19 +27,5 @@ electron-react-template
 |    |  |  |   ├─manifest.json
 |    |  |  |   └robots.txt
 |    ├─pages
-├─main   //  主进程
+├─main
 |  └index.js
-
-```
-### 启动命令
-分别在根目录和renderer的src/main下面
-```
-npm install
-```
-然后在根目录启动
-```
-npm run start
-```
-
-### 启动成功
-
