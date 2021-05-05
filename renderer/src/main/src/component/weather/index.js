@@ -38,21 +38,6 @@ const Weather = (props) => {
       setWeatherState(weatherJson)
     } else {
       console.log('需要调接口获取数据啦。。。')
-      // let defaultWearher = null
-      // const weatherData = JSON.parse(sessionStorage.getItem('weatherJson'))
-      // if (!weatherData) {
-      //   const { data } = await getWeatherApi({ version: 'v1', appid: 61734142, appsecret: 'luMQlBP8' })
-      //   defaultWearher = data[0]
-      //   sessionStorage.setItem('weatherJson', JSON.stringify(data[0]))
-      // } else {
-      //   defaultWearher = weatherData
-      // }
-      // this.city = defaultWearher.city || ''
-      // this.date = formatDate(new Date().toLocaleDateString(), 'yyyy-MM-dd')
-      // this.wea = defaultWearher.wea || ''
-      // this.tem = defaultWearher.tem.split('℃')[0] || ''
-      // this.week = defaultWearher.week || ''
-      // this.air_pm25 = defaultWearher.air_pm25 || ''
     }
     return () => { }
   }, [])
